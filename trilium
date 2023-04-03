@@ -1,0 +1,32 @@
+---
+version: '2.1'
+services:
+  trilium:
+    container_name: SovNotes
+    security_opt:
+      - no-new-privileges # does not allow new privileges to be created inside the container
+    cap_drop:
+      - ALL # drops all container capabilities except what is listed in cap_add
+    cap_add:
+      - CHOWN 
+      - SETFCAP
+      - SETGID
+      - SETUID
+    image: zadam/trilium:latest
+    restart: unless-stopped
+    environment:
+      - TRILIUM_DATA_DIR=/home/node/trilium-data
+      - USER_UID=988 # recommend using a system user OR non-root user
+      - USER_GID=988 # recommend using a group that is shared with docker
+    ports:
+      - 8080:8080 #ports can be closed if using in conjunction with reverse proxy
+    volumes:
+      - /opt/trilium/:/home/node/trilium-data
+    networks:
+      - sovbridge
+      
+networks:
+ sovbridge:
+  external: true
+
+...
