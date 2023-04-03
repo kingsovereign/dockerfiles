@@ -22,10 +22,10 @@ services:
       - 8080:8080 #ports can be closed if using in conjunction with reverse proxy
     volumes:
       - /opt/trilium/:/home/node/trilium-data
-    networks:
+    networks: # this part coincides with the bottom half. Delete/comment out if unnecessary
       - sovbridge
-      
-networks:
+# this part is only needed if you have an external network created already      
+networks: 
  sovbridge:
   external: true
 
